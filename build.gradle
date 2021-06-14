@@ -19,10 +19,12 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: "$mariadbVersion"
     implementation(group: 'io.github.juandmercadolopez.mercadolibre.challenge.core', name: 'mutants-challenge-mercadolibre-core', version: "$mutantsCoreVersion")
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {

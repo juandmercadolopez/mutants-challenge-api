@@ -3,12 +3,14 @@ package io.github.juandmercadolopez.mercadolibre.challenge.api.controller;
 import io.github.juandmercadolopez.mercadolibre.challenge.api.constant.ApplicationConstant;
 import io.github.juandmercadolopez.mercadolibre.challenge.api.model.DnaRequest;
 import io.github.juandmercadolopez.mercadolibre.challenge.api.model.DnaResponse;
+import io.github.juandmercadolopez.mercadolibre.challenge.api.model.StatModel;
 import io.github.juandmercadolopez.mercadolibre.challenge.api.service.MutantApiService;
 import io.github.juandmercadolopez.mercadolibre.challenge.api.util.Util;
 import mercadolibre.challenge.core.exception.DnaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +30,12 @@ public class MutantApiController {
 
     try {
       if (mutantApiService.validateDna(dnaRequest.getDna())) {
-        return new ResponseEntity<DnaResponse>(DnaResponse.builder()
+        return new ResponseEntity<DnaResponse>(
+            DnaResponse.builder()
                 .timestamp(Util.getTimestamp())
                 .status(HttpStatus.OK.value())
-                .build(), HttpStatus.OK);
+                .build(),
+            HttpStatus.OK);
       } else {
         return new ResponseEntity<DnaResponse>(
             DnaResponse.builder()
@@ -48,7 +52,7 @@ public class MutantApiController {
               .error(e.getMessage())
               .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
               .build(),
-              HttpStatus.INTERNAL_SERVER_ERROR);
+          HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (IOException e) {
       logger.severe(e.getMessage());
       return new ResponseEntity<DnaResponse>(
@@ -57,7 +61,12 @@ public class MutantApiController {
               .error(ApplicationConstant.ERROR_DURING_PROCESS)
               .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
               .build(),
-              HttpStatus.INTERNAL_SERVER_ERROR);
+          HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  @GetMapping(path = "/stats", produces = "application/json")
+  public ResponseEntity<StatModel> getStats() {
+    return new ResponseEntity<StatModel>(mutantApiService.getStats(), HttpStatus.OK);
   }
 }
