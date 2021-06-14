@@ -1,30 +1,30 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.1'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version "$springframeworkBootVersion"
+    id 'io.spring.dependency-management' version "$ioSpringDependencyManagement"
+    id 'java'
 }
 
-group = 'io.github.juandmercadolopez.mercadolibre.challenge.api'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = 11
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation(group: 'io.github.juandmercadolopez.mercadolibre.challenge.core', name: 'mutants-challenge-mercadolibre-core', version: "$mutantsCoreVersion")
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
