@@ -1,6 +1,7 @@
 package io.github.juandmercadolopez.mercadolibre.challenge.api.service.impl;
 
 import io.github.juandmercadolopez.mercadolibre.challenge.api.component.DnaComponent;
+import io.github.juandmercadolopez.mercadolibre.challenge.api.entity.DnaEntity;
 import io.github.juandmercadolopez.mercadolibre.challenge.api.model.StatModel;
 import io.github.juandmercadolopez.mercadolibre.challenge.api.repository.DnaRepository;
 import io.github.juandmercadolopez.mercadolibre.challenge.api.service.MutantApiService;
@@ -19,8 +20,6 @@ public class MutantApiServiceImpl implements MutantApiService {
 
   @Autowired DnaRepository dnaRepository;
 
-  Mutant mutant;
-
   @Override
   public StatModel getStats() {
     int humansDnaCount = dnaRepository.getCountRecords();
@@ -35,10 +34,12 @@ public class MutantApiServiceImpl implements MutantApiService {
 
   @Override
   public boolean validateDna(List<String> dnaRequestArray) throws DnaException {
-    mutant = new Mutant();
-    boolean output = mutant.isMutant(Util.stringArrayListToStringArray(dnaRequestArray));
-    dnaRepository.save(
-        dnaComponent.buildDnaEntity(Util.stringArrayListToStringArray(dnaRequestArray), output));
+    boolean output = Mutant.isMutant(Util.stringArrayListToStringArray(dnaRequestArray));
+    saveResult(Util.stringArrayListToStringArray(dnaRequestArray), output);
     return output;
+  }
+
+  public DnaEntity saveResult(String[] dnaRequestArray, boolean result) {
+    return dnaRepository.save(dnaComponent.buildDnaEntity(dnaRequestArray, result));
   }
 }

@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
+@Generated
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

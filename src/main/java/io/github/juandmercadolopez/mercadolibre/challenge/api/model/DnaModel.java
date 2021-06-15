@@ -3,6 +3,7 @@ package io.github.juandmercadolopez.mercadolibre.challenge.api.model;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+@Generated
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

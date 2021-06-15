@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
 
+@Generated
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
